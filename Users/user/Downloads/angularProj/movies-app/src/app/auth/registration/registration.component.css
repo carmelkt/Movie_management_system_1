@@ -1,0 +1,48 @@
+body{
+    background-color:maroon;
+}
+
+input.form-control,input.form-control:focus{
+    background-color:rgb(248, 246, 246);
+    color: black;
+    border-color: black;
+    border-radius: 0px;
+    border-width: 2px;
+    width:415px;
+    align-items: center;
+    /* padding: 6px 15px 6px 15px; */
+}
+
+input.form-control:focus{
+    box-shadow: none;
+    border-bottom-color: black;
+}
+
+button[type=submit].btn{
+    border-radius: 20px;
+    background-color:maroon;
+    color: #fff;
+}
+
+div.form-group label{
+    color: black;
+    font-weight: bold;
+}
+
+div.form-group.required>label:first-child:after{
+    content:'*';
+    color: #dc3545;
+	padding-left: 5px;
+}
+
+#toast-container > div {
+    opacity:1;
+}
+
+form{
+    margin: 0px 16px;
+}
+
+div.side-header{
+    border:3px solid black;
+}
