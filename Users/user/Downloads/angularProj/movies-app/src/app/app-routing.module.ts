@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Router, RouterModule, Routes } from '@angular/router';
+import { AppComponent } from './app.component';
 
 import { AuthComponent } from './auth/auth.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -15,6 +16,9 @@ import { MoviesComponent } from './movies/movies.component';
 
 const appRoutes:Routes=[
     {path:'', redirectTo:'/auth/login',pathMatch:'full'},
+
+    // {path:'header',component:HeaderComponent},
+
 {path:'movies', component:MoviesComponent,resolve:[MoviesResolverService], children:[
     {path:'',component:MovieStartComponent},
     {path:'new',component:MovieEditComponent,canActivate:[AuthGuardGuard],data:{permittedRoles:['Admin']}},

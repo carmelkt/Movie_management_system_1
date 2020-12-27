@@ -10,13 +10,13 @@
         <h1>{{movie?.name}}</h1>
     </div>
 </div>
-<div class="row">
+<div class="row" *ngIf="isAdmin">
     <div class="col-xs-12">
-        <div class="btn-group" appDropdown>
+        <div class="btn-group"  appDropdown>
             <button type="button" class="btn btn-primary dropdown-toggle">Movie Manager<span class="caret"></span></button>
             <ul class="dropdown-menu">
-                <li><a style="cursor: pointer;" (click)="onEditMovie()">Edit Movie Details!</a></li>
-                <li><a style="cursor: pointer;"(click)="onDeleteMovie()">Delete Movie!</a></li>
+                <li *ngIf="isAdmin"><a style="cursor: pointer;" (click)="onEditMovie()" >Edit Movie Details!</a></li>
+                <li *ngIf="isAdmin"><a style="cursor: pointer;"(click)="onDeleteMovie()">Delete Movie!</a></li>
             </ul>
         </div>
     </div>

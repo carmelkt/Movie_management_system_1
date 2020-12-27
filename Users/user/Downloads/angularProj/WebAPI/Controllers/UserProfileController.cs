@@ -40,7 +40,7 @@ namespace WebAPI.Controllers
         [Route("ForAdmin")]
         public string GetForAdmin()
         {
-            return "Web method for Admin";
+            return "Admin";
         }
 
         [HttpGet]
@@ -48,7 +48,7 @@ namespace WebAPI.Controllers
         [Route("ForAppUser")]
         public string GetAppUser()
         {
-            return "Web method for AppUser";
+            return "AppUser";
         }
 
         [HttpGet]
