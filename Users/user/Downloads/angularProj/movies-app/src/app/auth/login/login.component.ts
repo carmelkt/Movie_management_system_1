@@ -19,8 +19,11 @@ export class LoginComponent implements OnInit {
   constructor(private service:AuthService, private router:Router, private toastr:ToastrService) { }
 
   ngOnInit() {
-    if (localStorage.getItem('token') != null)
+    if (localStorage.getItem('token') != null){
+      
       this.router.navigateByUrl('/movies');
+      
+    }
   }
 
   onSubmit(form: NgForm) {
@@ -28,7 +31,7 @@ export class LoginComponent implements OnInit {
       (res: any) => {
         localStorage.setItem('token', res.token);
         this.router.navigateByUrl('/movies');
-      },
+      location.reload();},
       err => {
         if (err.status == 400)
           this.toastr.error('Incorrect username or password.', 'Authentication failed.');
