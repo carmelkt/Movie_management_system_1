@@ -40,9 +40,7 @@ namespace WebAPI.Controllers
              var x=movie.ID;
              if(x!=0)
             { Movie us = dc.Movies.Where(temp => temp.ID == x).FirstOrDefault();
-            //return new string[]{"KalyanaRaman","Vettam","Shutter Island"};
-           //var movie1 = Newtonsoft.Json.JsonConvert.DeserializeObject<Movie>(movie);
-           //JObject json = JObject.Parse(movie);
+            
            us.name=movie.name;
            us.imagePath=movie.imagePath;
            us.description=movie.description;
