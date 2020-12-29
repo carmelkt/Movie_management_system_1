@@ -7,15 +7,11 @@ import { AuthService } from './shared/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  // isLoggedIn=false;
-  // constructor(private service:AuthService){
-
-  // }
+   }
 
   ngOnInit() {
     if(localStorage.getItem('token')!=null){
-    // this.isLoggedIn=!this.isLoggedIn;
-    // window.location.reload();
+   
     }
   }
 } 
