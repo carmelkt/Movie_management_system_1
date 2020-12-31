@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using WebAPI.Data;
 using WebAPI.Data.Repo;
+using AutoMapper;
+
 
 namespace WebAPI.Controllers
 {
@@ -15,58 +17,124 @@ namespace WebAPI.Controllers
     [ApiController]
     public class MovieController : ControllerBase
     {
+        
         private readonly movieDbContext dc;
         private readonly IMovieRepository repo;
+    
         public MovieController(movieDbContext dc, IMovieRepository repo)
         {
             this.repo=repo;
             this.dc=dc;
         }
-
+    
         [HttpGet]
         [Authorize(Roles = "Admin,AppUser")]
-        public async Task<IActionResult> getMovies()
-        {
+        public IActionResult getMovies()
+        {       
+            List<MovieFullModel> allMovies = new List<MovieFullModel>();
             //return new string[]{"KalyanaRaman","Vettam","Shutter Island"};
-            var movies= await repo.GetMoviesAsync();
+            var movies=GetMovies();
+            var actors=GetActors();
+            var moviecasts=dc.MovieCasts.ToList();
+            foreach(var movie in movies)
+            {MovieFullModel movieFull=new MovieFullModel();
             
-            return Ok(movies);
-        }
-
-        [HttpPut("post")]
-        [Authorize(Roles ="Admin")]
-        public async Task<IActionResult> AddMovie(Movie movie)
-        {
-             var x=movie.ID;
-             if(x!=0)
-            { Movie us = dc.Movies.Where(temp => temp.ID == x).FirstOrDefault();
-            //return new string[]{"KalyanaRaman","Vettam","Shutter Island"};
-           //var movie1 = Newtonsoft.Json.JsonConvert.DeserializeObject<Movie>(movie);
-           //JObject json = JObject.Parse(movie);
-           us.name=movie.name;
-           us.imagePath=movie.imagePath;
-           us.description=movie.description;
-           us.actors=movie.actors;
-            
-            await repo.SaveAsync();
-            return StatusCode(201);}
-            else
-            {
-                repo.AddMovie(movie);
-            await repo.SaveAsync();
-            return StatusCode(201);
+                movieFull.MovieID=movie.MovieID;
+                movieFull.name=movie.name;
+            movieFull.imagePath=movie.imagePath;
+            movieFull.description=movie.description;
+                int mid=movie.MovieID;
+                var mc=moviecasts.Where(x=>x.MovieID==mid).ToArray();
+                List<ActorFullModel> allActors = new List<ActorFullModel>();
+                foreach(var actor in mc)
+                {
+                    ActorFullModel actorFull=new ActorFullModel();
+                    actorFull.ActorID=actor.ActorID;
+                    actorFull.role=actor.role;
+                    var act=dc.Actors.Where(x=>x.ActorID==actor.ActorID).FirstOrDefault();
+                    actorFull.name=act.name;
+                    allActors.Add(actorFull);                 
+                }
+                movieFull.actors=allActors.ToArray();
+                allMovies.Add(movieFull);
             }
-
-            
+            return Ok(allMovies);
         }
+
+        private List<Movie> GetMovies()
+        {
+            return(dc.Movies.ToList());
+        }
+
+        private List<Actor> GetActors()
+        {
+            return(dc.Actors.ToList());
+        }
+
+         private void checkactor(string actorname){
+             {var value=dc.Actors.Where(x=>x.name==actorname).FirstOrDefault();
+             if(value==null)
+             {dc.Actors.Add(new Actor(){name=actorname});
+             dc.SaveChanges();}}
+         }
+         private void checkmovie(string moviename,string imagepath,string description,int mid){
+             {Movie value=dc.Movies.Where(x=>x.name==moviename).FirstOrDefault();
+             if(value==null)
+             {dc.Movies.Add(new Movie(){name=moviename,imagePath=imagepath,description=description});
+             dc.SaveChanges();}
+             else{
+                 value.description=description;
+                 value.imagePath=imagepath;             
+                 dc.SaveChanges();
+             }}
+         }
+
+         private void checkmoviecast(string moviename,string actorname, string role){
+             Movie value=dc.Movies.Where(x=>x.name==moviename).FirstOrDefault();
+             Actor value2=dc.Actors.Where(x=>x.name==actorname).FirstOrDefault();
+             MovieCast value3=dc.MovieCasts.Where(x=>x.ActorID==value2.ActorID&&x.MovieID==value.MovieID).FirstOrDefault();
+             if(value!=null&&value2!=null&&value3==null)
+             {
+                 int mid=value.MovieID;
+                 int aid=value2.ActorID;
+                 dc.MovieCasts.Add(new MovieCast(){MovieID=mid,ActorID=aid,role=role});
+                 dc.SaveChanges();
+             }
+         }
+
+        [HttpPut("post2")]
+        [Authorize(Roles ="Admin")]
+        public  IActionResult AddMovie2(MovieFullModel movie)
+        {
+            Movie us=new Movie();
+            // Actor actor=new Actor();
+            MovieCast mc=new MovieCast();
+            
+            foreach(var actor in movie.actors){
+                checkactor(actor.name);
+            }
+            checkmovie(movie.name,movie.imagePath,movie.description,movie.MovieID);
+            
+            foreach(var actor in movie.actors){
+                checkmoviecast(movie.name,actor.name,actor.role);
+            }         
+            return Ok(movie);
+        }
+
 
         [HttpPut("delete")]
         [Authorize(Roles ="Admin")]
-        public async Task<IActionResult> DeleteMovie(Movie movie)
+        public  IActionResult DeleteMovie(Movie movie)
         {
-            repo.DeleteMovie(movie.ID);
-            await repo.SaveAsync();
-            return Ok(movie.ID);
+           var moviez=dc.Movies.Find(movie.MovieID);
+        //    foreach(var actor in movie.actors)
+        //    {
+             
+        //        dc.Actors.Remove(actor);
+        //    }
+           dc.Movies.Remove(moviez);
+           dc.SaveChangesAsync();
+            return Ok(movie.MovieID);
         }     
     }
 }

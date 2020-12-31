@@ -13,6 +13,7 @@ import { MovieService } from '../movie.service';
 export class MovieDetailComponent implements OnInit {
   movie:Movie;
   id:number;
+  isAdmin=false;
 
   constructor(private movieService:MovieService,
     private dsService:DataStorageService,
@@ -25,6 +26,11 @@ export class MovieDetailComponent implements OnInit {
       (params:Params)=>{
 this.id=+params['id'];
 this.movie=this.movieService.getMovie(this.id);
+if(localStorage.getItem('token')!=null){
+  if(this.service.roleMatch(['Admin'])){
+    this.isAdmin=true;
+  }
+}
       }
     )
   }

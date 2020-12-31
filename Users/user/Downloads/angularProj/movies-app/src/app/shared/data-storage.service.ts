@@ -47,7 +47,7 @@ for(let movieEl of movies){
     // }
     // x.actors=y;
     
-this.http.put('http://localhost:5000/api/movie/post',movieEl).subscribe(
+this.http.put('http://localhost:5000/api/movie/post2',movieEl).subscribe(
     response=>{
         console.log(response);
     }
@@ -58,7 +58,7 @@ this.http.put('http://localhost:5000/api/movie/post',movieEl).subscribe(
        return this.http.get<Movie[]>('http://localhost:5000/api/movie')
         .pipe(map(movies=>{
             return movies.map(movie=>{
-                return {...movie, actors:movie.actors?movie.actors:""}
+                return {...movie, actors:movie.actors?movie.actors:[]}//
             });
         }),
         tap(movies=>{

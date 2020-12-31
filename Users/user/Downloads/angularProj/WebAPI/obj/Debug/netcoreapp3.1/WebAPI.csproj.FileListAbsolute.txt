@@ -83,3 +83,5 @@ C:\Users\user\Downloads\angularProj\WebAPI\bin\Debug\netcoreapp3.1\Microsoft.Asp
 C:\Users\user\Downloads\angularProj\WebAPI\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileProviders.Abstractions.dll
 C:\Users\user\Downloads\angularProj\WebAPI\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileProviders.Embedded.dll
 C:\Users\user\Downloads\angularProj\WebAPI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\user\Downloads\angularProj\WebAPI\bin\Debug\netcoreapp3.1\AutoMapper.dll
+C:\Users\user\Downloads\angularProj\WebAPI\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

@@ -44,18 +44,18 @@ this.route.params.subscribe(
    this.dsService.storeMovies();
   }
 
-//   onAddActor(){
-//     (<FormArray>this.movieForm.get('actors')).push(
-//       new FormGroup({
-//         'name':new FormControl(null,Validators.required),
-//         'role':new FormControl(null,Validators.required)
-//       })
-//     )
-//   }
+  onAddActor(){
+    (<FormArray>this.movieForm.get('actors')).push(
+      new FormGroup({
+        'name':new FormControl(null,Validators.required),
+        'role':new FormControl(null,Validators.required)
+      })
+    )
+  }
 
-//   onDeleteActor(index:number){
-// (<FormArray>this.movieForm.get('actors')).removeAt(index);
-//   }
+  onDeleteActor(index:number){
+(<FormArray>this.movieForm.get('actors')).removeAt(index);
+  }
 
   onCancel(){
 this.router.navigate(['../'],{relativeTo:this.route});
@@ -71,44 +71,44 @@ this.router.navigate(['../'],{relativeTo:this.route});
 let movieName='';
 let movieImagePath='';
 let movieDescription='';
-let movieActors='';
+// let movieActors='';
 let movieID=0;
-//let movieActors=new FormArray([]);
+let movieActors=new FormArray([]);
 
 if(this.editMode){
   const movie=this.movieService.getMovie(this.id);
   movieName=movie.name;
   movieImagePath=movie.imagePath;
   movieDescription=movie.description;
-  movieActors=movie.actors;
-  movieID=movie.id;
+  // movieActors=movie.actors;
+  movieID=movie.movieID;
   
-//  if(movie['actors']){
-//     for(let actor of movie.actors){
-//       movieActors.push(
-//         new FormGroup({
-//           'name':new FormControl(actor.name,Validators.required),
-//           'role':new FormControl(actor.role,Validators.required)
-//         })
-//       );
-//     }
-//   }
+ if(movie['actors']){
+    for(let actor of movie.actors){
+      movieActors.push(
+        new FormGroup({
+          'name':new FormControl(actor.name,Validators.required),
+          'role':new FormControl(actor.role,Validators.required)
+        })
+      );
+    }
+  }
 }
     this.movieForm=new FormGroup({
       'name':new FormControl(movieName,Validators.required),
       'imagePath':new FormControl(movieImagePath,Validators.required),
       'description':new FormControl(movieDescription,Validators.required),
-      'actors':new FormControl(movieActors,Validators.required),
-      'id':new FormControl(movieID)
-      //'actors':movieActors
+      // 'actors':new FormControl(movieActors,Validators.required),
+      'movieID':new FormControl(movieID),
+      'actors':movieActors
     });
     
 
   }
   
-  // get controls() { // a getter!
-  //   return (<FormArray>this.movieForm.get('actors')).controls;
-  // } 
+  get controls() { // a getter!
+    return (<FormArray>this.movieForm.get('actors')).controls;
+  } 
 
 
 }

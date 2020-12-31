@@ -19,6 +19,10 @@ using Microsoft.Extensions.Logging;
 using WebAPI.Data; 
 using WebAPI.Data.Repo;
 using WebAPI.Models;
+using AutoMapper;
+using Newtonsoft.Json;
+using System.Buffers;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 namespace WebAPI
 {
@@ -34,13 +38,18 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers()
+  .AddNewtonsoftJson(options =>
+      options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+   );
+            
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
             services.AddDbContext<movieDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<AuthenticationContext>(options=>
             options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
             services.AddDefaultIdentity<ApplicationUser>().AddRoles<IdentityRole>().AddEntityFrameworkStores<AuthenticationContext>();
-            
+            // services.AddAutoMapper(typeof(Startup));
             services.Configure<IdentityOptions>(options=>
             {
                 options.Password.RequireDigit=false;

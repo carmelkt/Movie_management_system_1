@@ -1,8 +1,15 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System;
+using System.Collections.Generic;
+
+using System.Linq;
+using System.Threading.Tasks;
 namespace WebAPI.Models
 {
     public class Movie
-    {
-       public int ID { get; set; }
+    {[Key]
+       public int MovieID { get; set; }
 
         public string name{get; set;}
 
@@ -10,6 +17,9 @@ namespace WebAPI.Models
 
         public string imagePath{get; set;}
 
-        public string actors{get; set;}
+        // [ForeignKey("actorID")]
+         public List<MovieCast> MovieCasts{get; set;}
+
+
     }
 }

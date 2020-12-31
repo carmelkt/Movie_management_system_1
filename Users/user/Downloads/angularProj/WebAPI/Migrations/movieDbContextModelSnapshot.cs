@@ -20,7 +20,7 @@ namespace WebAPI.Migrations
 
             modelBuilder.Entity("WebAPI.Models.Actor", b =>
                 {
-                    b.Property<int>("actorID")
+                    b.Property<int>("ActorID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -28,23 +28,17 @@ namespace WebAPI.Migrations
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("role")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("actorID");
+                    b.HasKey("ActorID");
 
                     b.ToTable("Actors");
                 });
 
             modelBuilder.Entity("WebAPI.Models.Movie", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("MovieID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("actors")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("description")
                         .HasColumnType("nvarchar(max)");
@@ -55,9 +49,42 @@ namespace WebAPI.Migrations
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("MovieID");
 
                     b.ToTable("Movies");
+                });
+
+            modelBuilder.Entity("WebAPI.Models.MovieCast", b =>
+                {
+                    b.Property<int>("ActorID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MovieID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("role")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ActorID", "MovieID");
+
+                    b.HasIndex("MovieID");
+
+                    b.ToTable("MovieCasts");
+                });
+
+            modelBuilder.Entity("WebAPI.Models.MovieCast", b =>
+                {
+                    b.HasOne("WebAPI.Models.Actor", "Actor")
+                        .WithMany()
+                        .HasForeignKey("ActorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebAPI.Models.Movie", "Movie")
+                        .WithMany("MovieCasts")
+                        .HasForeignKey("MovieID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

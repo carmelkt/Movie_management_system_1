@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
       (res: any) => {
         localStorage.setItem('token', res.token);
         this.router.navigateByUrl('/movies');
+        location.reload();
       },
       err => {
         if (err.status == 400)

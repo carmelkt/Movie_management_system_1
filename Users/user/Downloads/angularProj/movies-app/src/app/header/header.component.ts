@@ -10,6 +10,7 @@ import { DataStorageService } from '../shared/data-storage.service';
 
 export class HeaderComponent implements OnInit{
 userDetails;
+isLoggedIn=false;
 
 constructor(private dsService:DataStorageService, private router:Router, private service:AuthService){
 
@@ -17,6 +18,7 @@ constructor(private dsService:DataStorageService, private router:Router, private
 
 ngOnInit() {
     if(localStorage.getItem('token')!=null){
+      this.isLoggedIn=true;
     this.service.getUserProfile().subscribe(
       res => {
         this.userDetails = res;
@@ -36,6 +38,7 @@ onFetchData(){
 }
 
 onLogout() {
+  this.isLoggedIn=false;
     localStorage.removeItem('token');
     this.router.navigate(['/auth/login']);
   }

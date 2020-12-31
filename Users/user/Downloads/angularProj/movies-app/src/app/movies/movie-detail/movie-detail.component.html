@@ -10,15 +10,15 @@
         <h1>{{movie?.name}}</h1>
     </div>
 </div>
-<div class="row">
+<div class="row" *ngIf="isAdmin">
     <div class="col-xs-12">
-        <div class="btn-group" appDropdown>
+        <div class="btn-group"  appDropdown>
             <button type="button" class="btn btn-primary dropdown-toggle">Movie Manager<span class="caret"></span></button>
             <ul class="dropdown-menu">
-                <li><a style="cursor: pointer;" (click)="onEditMovie()">Edit Movie Details!</a></li>
-                <li><a style="cursor: pointer;"(click)="onDeleteMovie()">Delete Movie!</a></li>
-            </ul>
-        </div>
+                <li *ngIf="isAdmin"><a style="cursor: pointer;" (click)="onEditMovie()" >Edit Movie Details!</a></li>
+                <li *ngIf="isAdmin"><a style="cursor: pointer;"(click)="onDeleteMovie()">Delete Movie!</a></li>
+</ul>
+       </div>
     </div>
 </div>
 <hr>
@@ -28,20 +28,21 @@
     </div>
 </div>
 <hr>
-<div class="row">
+<!-- <div class="row">
     <div class="col-xs-12">
         <span style="font-weight: bolder; color:maroon;">Actors -</span>  {{movie?.actors}}
     </div>
-</div>
+</div> -->
 
-<!-- <div class="row">
+<div class="row">
     <div class="col-xs-12">
+        <span style="font-weight: bolder; color: maroon;">Actors:</span>
         <ul class="list-group">
-            <li class="list-group-item"></li>
-            *ngFor="let actor of movie.actors"
+            <li class="list-group-item"
+            *ngFor="let actor of movie.actors">
 {{actor?.name}} - {{actor?.role}}
-{{movie?.actors}}
-            </li>
+
+</li>
         </ul>
     </div>
-</div> -->
+</div> 

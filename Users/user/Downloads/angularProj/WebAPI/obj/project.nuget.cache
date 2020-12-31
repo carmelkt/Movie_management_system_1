@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "JRDC1XnLwZTVoDxNKDEsJUUftlH9BnIpvBXHm3gC6f/ZbJhjlDlAZbalAoxzWc6NJQnU7hEMrAEgdD/5fVI8WQ==",
+  "dgSpecHash": "KUS4qpcegyktMVr8rBa28rF/3YMOKWwKzqMLft1hoVctqj4/XwCuJ6bm7Pdu28l6nfSeCo2j0oaiKJ0AERstOQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\user\\Downloads\\angularProj\\WebAPI\\WebAPI.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\automapper\\9.0.0\\automapper.9.0.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\7.0.0\\automapper.extensions.microsoft.dependencyinjection.7.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\geoapi.core\\1.7.5\\geoapi.core.1.7.5.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.9\\microsoft.aspnetcore.authentication.jwtbearer.3.1.9.nupkg.sha512",
