@@ -7,6 +7,6 @@ routerLinkActive="active"
                 <!-- <p class="list-group-item-text">{{movie?.description}}</p> -->
             </div>
             <span class="pull-right">
-                <img src="{{movie?.imagePath}}" alt="{{movie?.name}}" class="img-responsive" style="max-height: 50px;">
+                <img [src]="viewImage" alt="{{movie?.name}}" class="img-responsive" style="max-height: 50px;">
             </span>
         </a>

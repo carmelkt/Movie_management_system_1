@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators,FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DataStorageService } from 'src/app/shared/data-storage.service';
 import { MovieService } from '../movie.service';
+import {saveAs} from 'file-saver';
+import * as FileSaver from 'file-saver';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-movie-edit',
@@ -13,12 +16,16 @@ export class MovieEditComponent implements OnInit {
   id:number;
   editMode=false;
   movieForm:FormGroup;
+  imagePath:string;
+  viewImage:string;
+  viewImageFile;
 
 
   constructor(private route :ActivatedRoute,
     private movieService:MovieService,
     private router:Router,
-    private dsService:DataStorageService) { }
+    private dsService:DataStorageService,
+    private _sanitizer:DomSanitizer) { }
 
   ngOnInit(){
 this.route.params.subscribe(
@@ -69,7 +76,8 @@ this.router.navigate(['../'],{relativeTo:this.route});
 
   private initForm(){
 let movieName='';
-let movieImagePath='';
+let movieImagePath;
+// let movieImagePath=this.imagePath;
 let movieDescription='';
 // let movieActors='';
 let movieID=0;
@@ -78,7 +86,11 @@ let movieActors=new FormArray([]);
 if(this.editMode){
   const movie=this.movieService.getMovie(this.id);
   movieName=movie.name;
-  movieImagePath=movie.imagePath;
+  this.viewImageFile=this._sanitizer.bypassSecurityTrustResourceUrl('data:image;base64,'+movie.imagePath);
+  // movieImagePath=movie.imagePath;
+  movieImagePath=this.viewImageFile;
+  // movieImagePath=this.imagePath;
+  movieImagePath=this.viewImageFile;
   movieDescription=movie.description;
   // movieActors=movie.actors;
   movieID=movie.movieID;
@@ -97,6 +109,7 @@ if(this.editMode){
     this.movieForm=new FormGroup({
       'name':new FormControl(movieName,Validators.required),
       'imagePath':new FormControl(movieImagePath,Validators.required),
+     
       'description':new FormControl(movieDescription,Validators.required),
       // 'actors':new FormControl(movieActors,Validators.required),
       'movieID':new FormControl(movieID),
@@ -110,5 +123,48 @@ if(this.editMode){
     return (<FormArray>this.movieForm.get('actors')).controls;
   } 
 
+  selectFile(event){
+    
+    const file = (event.target as HTMLInputElement).files[0];
+    // this.movieForm.patchValue({
+    //   imagex:file
+    // });
+    this.movieForm.get('imagePath').updateValueAndValidity();
 
-}
+    // File Preview
+    const reader = new FileReader();
+    
+    
+    
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.viewImage=reader.result as string;
+this.viewImageFile=reader.result;
+      // this.imagePath=reader.result.toString().split(',')[1];
+      this.imagePath=reader.result.toString().split(',')[1];
+      // this.imagePath = reader.result as string;
+      console.log(this.imagePath);
+      
+      this.movieForm.controls['imagePath'].setValue(
+        this.imagePath
+      );
+    }
+    
+    // let file = event.target.files[0];
+    // let reader = new FileReader();
+    // reader.readAsDataURL(file);
+    // reader.onload = function () {
+      
+    //   console.log(reader.result);
+      
+    // };
+    // this.imageUrl=reader.result.toString().split(',')[1];
+    // reader.onerror = function (error) {
+    //   console.log('Error: ', error);
+    // };
+      }
+    }
+  
+
+
+

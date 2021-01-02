@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 import { DataStorageService } from 'src/app/shared/data-storage.service';
 import { Movie } from '../movie.model';
 import { MovieService } from '../movie.service';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-movie-detail',
@@ -14,18 +15,22 @@ export class MovieDetailComponent implements OnInit {
   movie:Movie;
   id:number;
   isAdmin=false;
+  viewImage;
 
   constructor(private movieService:MovieService,
     private dsService:DataStorageService,
      private route:ActivatedRoute,
      private router:Router,
-     private service:AuthService) { }
+     private service:AuthService,
+     private _sanitizer:DomSanitizer) { }
 
   ngOnInit() {
+    
     this.route.params.subscribe(
       (params:Params)=>{
 this.id=+params['id'];
 this.movie=this.movieService.getMovie(this.id);
+this.viewImage=this._sanitizer.bypassSecurityTrustResourceUrl('data:image;base64,'+this.movie.imagePath);
 if(localStorage.getItem('token')!=null){
   if(this.service.roleMatch(['Admin'])){
     this.isAdmin=true;
