@@ -43,6 +43,9 @@ this.route.params.subscribe(
 
   onSubmit(){
    if(this.editMode){
+    const movie=this.movieService.getMovie(this.id);
+    if(this.movieForm.get('imagePath').value==null)
+    {this.movieForm.patchValue({"imagePath":movie.imagePath});}
      this.movieService.updateMovie(this.id,this.movieForm.value);
    } else{
      this.movieService.addMovie(this.movieForm.value);
@@ -88,9 +91,10 @@ if(this.editMode){
   movieName=movie.name;
   this.viewImageFile=this._sanitizer.bypassSecurityTrustResourceUrl('data:image;base64,'+movie.imagePath);
   // movieImagePath=movie.imagePath;
-  movieImagePath=this.viewImageFile;
+  this.viewImageFile=this._sanitizer.bypassSecurityTrustResourceUrl('data:image;base64,'+movie.imagePath);
+  movieImagePath=this.imagePath;
   // movieImagePath=this.imagePath;
-  movieImagePath=this.viewImageFile;
+  // movieImagePath=this.viewImageFile;
   movieDescription=movie.description;
   // movieActors=movie.actors;
   movieID=movie.movieID;
@@ -108,8 +112,8 @@ if(this.editMode){
 }
     this.movieForm=new FormGroup({
       'name':new FormControl(movieName,Validators.required),
-      'imagePath':new FormControl(movieImagePath,Validators.required),
-     
+      // 'imagePath':new FormControl(movieImagePath,Validators.required),
+      'imagePath':new FormControl(movieImagePath),
       'description':new FormControl(movieDescription,Validators.required),
       // 'actors':new FormControl(movieActors,Validators.required),
       'movieID':new FormControl(movieID),
@@ -150,18 +154,6 @@ this.viewImageFile=reader.result;
       );
     }
     
-    // let file = event.target.files[0];
-    // let reader = new FileReader();
-    // reader.readAsDataURL(file);
-    // reader.onload = function () {
-      
-    //   console.log(reader.result);
-      
-    // };
-    // this.imageUrl=reader.result.toString().split(',')[1];
-    // reader.onerror = function (error) {
-    //   console.log('Error: ', error);
-    // };
       }
     }
   

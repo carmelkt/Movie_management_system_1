@@ -43,7 +43,7 @@
                     </div>
                 </div>
             </div> -->
-            <div class="row">
+            <div class="row" >
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label for="imagePath">Poster URL</label>
@@ -53,11 +53,11 @@
                         id="imagePath"
                         name="imagePath"
                         (change)="selectFile($event)"
-                        [data]="viewImageFile"
+                        
                         
                         
                         >
-                        <input type="image hidden" name="fileHidden" [value]="viewImage" formControlName="imagePath"/>
+                        <input type="hidden" name="fileHidden"  formControlName="imagePath"/>
                     </div>
                 </div>
             </div>
