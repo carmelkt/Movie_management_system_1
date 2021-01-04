@@ -24,8 +24,6 @@ isAdmin=false;
     private service:AuthService) { }
 
   ngOnInit(){
-    
-
     this.subscription=this.movieService.moviesChanged
     .subscribe(
       (movies:Movie[])=>{
@@ -37,20 +35,15 @@ isAdmin=false;
         this.isAdmin=true;
       } 
      }
-    this.movies=this.movieService.getMovies();
-    
-    
+    this.movies=this.movieService.getMovies();   
   }
 
   onNewMovie(){
-this.router.navigate(['new'],{relativeTo:this.route});
+     this.router.navigate(['new'],{relativeTo:this.route});
   }
 
   ngOnDestroy(){
-this.subscription.unsubscribe(); 
-this.isAdmin=false;
+     this.subscription.unsubscribe(); 
+     this.isAdmin=false;
   }
-
-  
-
 }
