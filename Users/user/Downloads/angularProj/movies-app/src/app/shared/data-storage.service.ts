@@ -10,9 +10,7 @@ import {map,tap} from 'rxjs/operators';
 export class DataStorageService{
 
     constructor(private http:HttpClient,
-        private movieService:MovieService){
-
-    }
+                private movieService:MovieService){ }
 
     deleteMovies(index:number){
         const movies=this.movieService.getMovies();
@@ -24,34 +22,14 @@ export class DataStorageService{
         );
     }
 
-    storeMovies(){
-       // var x="";
-const movies=this.movieService.getMovies();
-
-//{
-    //for(let actorEl of movieEl.actors)
-    //{
-        //x=x+actorEl.name+",";
-    //}
-//}
-for(let movieEl of movies){
-
-
-    //x.name=movieEl.name;
-    //x.imagePath=movieEl.imagePath;
-    //x.description=movieEl.description;
-    //  for(let actor of movieEl.actors)
-    //  {
-    //     var y="";
-    //    y=y+actor.name+",";
-    // }
-    // x.actors=y;
-    
-this.http.put('http://localhost:5000/api/movie/post',movieEl).subscribe(
-    response=>{
-        console.log(response);
-    }
-);}
+    storeMovies(){       
+        const movies=this.movieService.getMovies();
+        for(let movieEl of movies){    
+        this.http.put('http://localhost:5000/api/movie/post',movieEl).subscribe(
+        response=>{
+            console.log(response);
+        });
+        }
     }
 
     fetchMovies(){
@@ -65,7 +43,5 @@ this.http.put('http://localhost:5000/api/movie/post',movieEl).subscribe(
             this.movieService.setMovies(movies);
         })
         )
-    }
-
-   
+      }   
     }
