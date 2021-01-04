@@ -9,8 +9,8 @@ import { AuthService } from '../shared/auth.service';
 export class AuthGuardGuard implements CanActivate {
   
   constructor(private router:Router, private service:AuthService){
-
   }
+  
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
@@ -29,7 +29,5 @@ export class AuthGuardGuard implements CanActivate {
       this.router.navigate(['/auth/login']);
       return false;
     }
-
-  }
-  
+  }  
 }
