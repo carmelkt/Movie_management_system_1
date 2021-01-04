@@ -27,9 +27,7 @@ namespace WebAPI.Controllers
         [Authorize(Roles = "Admin,AppUser")]
         public async Task<IActionResult> getMovies()
         {
-            //return new string[]{"KalyanaRaman","Vettam","Shutter Island"};
-            var movies= await repo.GetMoviesAsync();
-            
+            var movies= await repo.GetMoviesAsync();         
             return Ok(movies);
         }
 
@@ -39,23 +37,20 @@ namespace WebAPI.Controllers
         {
              var x=movie.ID;
              if(x!=0)
-            { Movie us = dc.Movies.Where(temp => temp.ID == x).FirstOrDefault();
-            
-           us.name=movie.name;
-           us.imagePath=movie.imagePath;
-           us.description=movie.description;
-           us.actors=movie.actors;
-            
-            await repo.SaveAsync();
-            return StatusCode(201);}
-            else
-            {
-                repo.AddMovie(movie);
-            await repo.SaveAsync();
-            return StatusCode(201);
-            }
-
-            
+             { 
+               Movie us = dc.Movies.Where(temp => temp.ID == x).FirstOrDefault();            
+               us.name=movie.name;
+               us.imagePath=movie.imagePath;
+               us.description=movie.description;
+               us.actors=movie.actors;           
+               await repo.SaveAsync();
+               return StatusCode(201);}
+             else
+             {
+               repo.AddMovie(movie);
+               await repo.SaveAsync();
+               return StatusCode(201);
+             }        
         }
 
         [HttpPut("delete")]
