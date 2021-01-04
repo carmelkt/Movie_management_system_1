@@ -100,6 +100,11 @@ namespace WebAPI.Controllers
                  dc.MovieCasts.Add(new MovieCast(){MovieID=mid,ActorID=aid,role=role});
                  dc.SaveChanges();
              }
+             else if(value!=null&&value2!=null&&value3!=null)
+             {
+                 value3.role=role;
+                 dc.SaveChanges();
+             }
          }
 
         [HttpPut("post2")]
@@ -114,6 +119,14 @@ namespace WebAPI.Controllers
                 checkactor(actor.name);
             }
             checkmovie(movie.name,movie.imagePath,movie.description,movie.MovieID);
+
+            Movie value=dc.Movies.Where(x=>x.name==movie.name).FirstOrDefault();
+            List<MovieCast> del=dc.MovieCasts.Where(x=>x.MovieID==value.MovieID).ToList();
+             foreach(var movi in del)
+             {
+                 dc.MovieCasts.Remove(movi);
+                 dc.SaveChanges();
+             }
             
             foreach(var actor in movie.actors){
                 checkmoviecast(movie.name,actor.name,actor.role);
