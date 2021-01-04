@@ -10,8 +10,6 @@ export class AuthService {
   constructor(private fb:FormBuilder, private http:HttpClient) { }
   readonly BaseURI = 'http://localhost:5000/api';
 
-
-
   formModel = this.fb.group({
     UserName: ['', Validators.required],
     Email: ['', Validators.email],
@@ -20,13 +18,10 @@ export class AuthService {
       Password: ['', [Validators.required, Validators.minLength(4)]],
       ConfirmPassword: ['', Validators.required]
     }, { validator: this.comparePasswords })
-
   });
 
   comparePasswords(fb: FormGroup) {
-    let confirmPswrdCtrl = fb.get('ConfirmPassword');
-    //passwordMismatch
-    //confirmPswrdCtrl.errors={passwordMismatch:true}
+    let confirmPswrdCtrl = fb.get('ConfirmPassword');  
     if (confirmPswrdCtrl.errors == null || 'passwordMismatch' in confirmPswrdCtrl.errors) {
       if (fb.get('Password').value != confirmPswrdCtrl.value)
         confirmPswrdCtrl.setErrors({ passwordMismatch: true });
