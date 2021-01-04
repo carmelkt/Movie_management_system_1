@@ -61,8 +61,6 @@ namespace WebAPI.Controllers
             {
                 var role=await _userManager.GetRolesAsync(user);
                 IdentityOptions _options=new IdentityOptions();
-
-
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new Claim[]
@@ -80,8 +78,6 @@ namespace WebAPI.Controllers
             }
             else
                 return BadRequest(new { message = "Username or password is incorrect." });
-        }
-
-        
+        }        
     }
 }
