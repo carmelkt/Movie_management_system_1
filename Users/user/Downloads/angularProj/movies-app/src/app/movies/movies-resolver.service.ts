@@ -8,18 +8,16 @@ import { MovieService } from './movie.service';
 export class MoviesResolverService implements Resolve<Movie[]>{
     constructor(private dsService:DataStorageService,
         private movieService:MovieService){
-
     }
 
     resolve(route:ActivatedRouteSnapshot,state:RouterStateSnapshot){
-const movies=this.movieService.getMovies();
+       const movies=this.movieService.getMovies();
 
-if(movies.length==0){
-    return this.dsService.fetchMovies();
-} else{
-    return movies;
-}
-       
+       if(movies.length==0){
+           return this.dsService.fetchMovies();
+       } 
+       else{
+           return movies;
+       }      
     }
-
 }
