@@ -30,9 +30,8 @@ export class RegistrationComponent implements OnInit {
               case 'DuplicateUserName':
                 this.toastr.error('Username is already taken','Registration failed.');
                 break;
-
               default:
-              this.toastr.error(element.description,'Registration failed.');
+                this.toastr.error(element.description,'Registration failed.');
                 break;
             }
           });
@@ -43,5 +42,4 @@ export class RegistrationComponent implements OnInit {
       }
     );
   this.router.navigateByUrl('/auth/login');}
-
 }
