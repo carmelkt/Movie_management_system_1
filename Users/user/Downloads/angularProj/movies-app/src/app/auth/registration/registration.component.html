@@ -1,13 +1,4 @@
-<!-- <p>registration works!</p> -->
-<div class="row mt-4">
-    <!-- <div class="col-md-6">
-        <div class="row" style="height:450px;">
-            <div class="col-md-12 my-auto side-header">
-                <h1>User Registration</h1>
-                
-            </div>
-        </div>
-    </div> -->
+<div class="row mt-4">  
     <div class="col-md-6">
         <form [formGroup]="service.formModel" autocomplete="off" (submit)="onSubmit()">
             <div class="form-group required">
@@ -24,7 +15,6 @@
                 <label>Full Name</label>
                     <input  class="form-control" formControlName="FullName">             
             </div>
-
         <div formGroupName="Passwords">
             <div class="form-group required">
                 <label>Password</label>
