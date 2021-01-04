@@ -6,12 +6,8 @@ import { AuthService } from './shared/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-   }
+export class AppComponent {}
 
-  ngOnInit() {
-    if(localStorage.getItem('token')!=null){
-   
-    }
+  ngOnInit() {    
   }
 } 
