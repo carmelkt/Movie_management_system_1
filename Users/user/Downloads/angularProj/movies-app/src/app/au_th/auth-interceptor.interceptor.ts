@@ -8,7 +8,6 @@ import { Router } from "@angular/router";
 export class AuthInterceptorInterceptor implements HttpInterceptor {
 
     constructor(private router: Router) {
-
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
