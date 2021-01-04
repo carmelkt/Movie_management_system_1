@@ -41,8 +41,8 @@ namespace WebAPI.Controllers
             
                 movieFull.MovieID=movie.MovieID;
                 movieFull.name=movie.name;
-            movieFull.imagePath=movie.imagePath;
-            movieFull.description=movie.description;
+                movieFull.imagePath=movie.imagePath;
+                movieFull.description=movie.description;
                 int mid=movie.MovieID;
                 var mc=moviecasts.Where(x=>x.MovieID==mid).ToArray();
                 List<ActorFullModel> allActors = new List<ActorFullModel>();
@@ -140,14 +140,9 @@ namespace WebAPI.Controllers
         public  IActionResult DeleteMovie(Movie movie)
         {
            var moviez=dc.Movies.Find(movie.MovieID);
-        //    foreach(var actor in movie.actors)
-        //    {
-             
-        //        dc.Actors.Remove(actor);
-        //    }
            dc.Movies.Remove(moviez);
            dc.SaveChangesAsync();
-            return Ok(movie.MovieID);
+           return Ok(movie.MovieID);
         }     
     }
 }

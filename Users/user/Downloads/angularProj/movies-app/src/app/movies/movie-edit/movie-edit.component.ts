@@ -6,6 +6,8 @@ import { MovieService } from '../movie.service';
 import {saveAs} from 'file-saver';
 import * as FileSaver from 'file-saver';
 import {DomSanitizer} from '@angular/platform-browser';
+import { Movie } from '../movie.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-movie-edit',
@@ -19,13 +21,17 @@ export class MovieEditComponent implements OnInit {
   imagePath:string;
   viewImage:string;
   viewImageFile;
+  movies:Movie[];
+  movieExist=false;
+
 
 
   constructor(private route :ActivatedRoute,
     private movieService:MovieService,
     private router:Router,
     private dsService:DataStorageService,
-    private _sanitizer:DomSanitizer) { }
+    private _sanitizer:DomSanitizer,
+    private toastr: ToastrService,) { }
 
   ngOnInit(){
 this.route.params.subscribe(
@@ -44,11 +50,23 @@ this.route.params.subscribe(
   onSubmit(){
    if(this.editMode){
     const movie=this.movieService.getMovie(this.id);
+    
     if(this.movieForm.get('imagePath').value==null)
     {this.movieForm.patchValue({"imagePath":movie.imagePath});}
      this.movieService.updateMovie(this.id,this.movieForm.value);
    } else{
+    this.movies=this.movieService.getMovies();
+    this.movies.forEach(movi=> {
+      if(this.movieForm.get('name').value==movi.name)
+      {
+        this.movieExist=true;
+        this.toastr.error('Go to edit movie','Movie Exists');
+      }
+    });
+    if(!this.movieExist)
+    {
      this.movieService.addMovie(this.movieForm.value);
+    }
    }
    this.onCancel();
    this.dsService.storeMovies();
