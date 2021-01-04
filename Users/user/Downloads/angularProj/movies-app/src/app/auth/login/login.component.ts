@@ -19,10 +19,8 @@ export class LoginComponent implements OnInit {
   constructor(private service:AuthService, private router:Router, private toastr:ToastrService) { }
 
   ngOnInit() {
-    if (localStorage.getItem('token') != null){
-      
-      this.router.navigateByUrl('/movies');
-      
+    if (localStorage.getItem('token') != null){      
+      this.router.navigateByUrl('/movies');     
     }
   }
 
@@ -40,5 +38,4 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-
 }
