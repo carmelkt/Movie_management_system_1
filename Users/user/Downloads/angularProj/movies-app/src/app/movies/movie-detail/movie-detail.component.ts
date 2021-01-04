@@ -16,7 +16,7 @@ export class MovieDetailComponent implements OnInit {
   isAdmin=false;
 
   constructor(private movieService:MovieService,
-    private dsService:DataStorageService,
+     private dsService:DataStorageService,
      private route:ActivatedRoute,
      private router:Router,
      private service:AuthService) { }
@@ -24,29 +24,27 @@ export class MovieDetailComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(
       (params:Params)=>{
-this.id=+params['id'];
-this.movie=this.movieService.getMovie(this.id);
-if(localStorage.getItem('token')!=null){
- if(this.service.roleMatch(['Admin'])){
-   this.isAdmin=true;
- } 
-}
-      }
-    )
+         this.id=+params['id'];
+         this.movie=this.movieService.getMovie(this.id);
+         if(localStorage.getItem('token')!=null){
+            if(this.service.roleMatch(['Admin'])){
+                this.isAdmin=true;
+            } 
+         }
+      });
   }
 
   onEditMovie(){
-this.router.navigate(['edit'],{relativeTo:this.route});
+    this.router.navigate(['edit'],{relativeTo:this.route});
   }
 
   onDeleteMovie(){
-    if(this.service.roleMatch(['Admin'])){
-    this.dsService.deleteMovies(this.id);
-    this.movieService.deleteMovie(this.id);
-    
-    this.router.navigate(['../movies']);}
-
+    if(this.service.roleMatch(['Admin']))
+    {
+       this.dsService.deleteMovies(this.id);
+       this.movieService.deleteMovie(this.id);  
+       this.router.navigate(['../movies']);
+    }
     else this.router.navigate(['../forbidden']);
   }
-
 }
