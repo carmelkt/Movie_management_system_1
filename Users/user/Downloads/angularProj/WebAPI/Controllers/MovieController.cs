@@ -44,7 +44,7 @@ namespace WebAPI.Controllers
         }
     
         [HttpGet]
-        // [Authorize(Roles = "Admin,AppUser")]
+        [Authorize(Roles = "Admin,AppUser")]
         public IActionResult getMovies()
         {       
             List<MovieFullModel> allMovies = new List<MovieFullModel>();         
@@ -69,7 +69,7 @@ namespace WebAPI.Controllers
                              byte[] datas=System.IO.File.ReadAllBytes(file);
                              dataContent=Convert.ToBase64String(datas);
                              movie.imageUrl=dataContent;
-                              break;
+                             break;
                          }                         
                      }
                      
@@ -105,7 +105,7 @@ namespace WebAPI.Controllers
 
          
         [HttpPut("post2")]
-        // [Authorize(Roles ="Admin")]
+        [Authorize(Roles ="Admin")]
         public  IActionResult AddMovie2(MovieFullModel movie)
         {
             Movie us=new Movie();            
