@@ -10,8 +10,6 @@ export class AuthService {
   constructor(private fb:FormBuilder, private http:HttpClient) { }
   readonly BaseURI = 'http://localhost:5000/api';
 
-
-
   formModel = this.fb.group({
     UserName: ['', Validators.required],
     Email: ['', Validators.email],

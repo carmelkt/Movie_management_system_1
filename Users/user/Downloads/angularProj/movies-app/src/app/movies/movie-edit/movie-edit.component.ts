@@ -38,12 +38,8 @@ this.route.params.subscribe(
   (params:Params)=>{
     this.id=+params['id'];
     this.editMode=params['id'] !=null;
-    this.initForm();
-  }
-);
-
-
-  
+    this.initForm();  
+  });  
 }
 
 
@@ -54,7 +50,8 @@ this.route.params.subscribe(
     if(this.movieForm.get('imagePath').value==null)
     {this.movieForm.patchValue({"imagePath":movie.imagePath});}
      this.movieService.updateMovie(this.id,this.movieForm.value);
-   } else{
+    } 
+    else{
     this.movies=this.movieService.getMovies();
     this.movies.forEach(movi=> {
       if(this.movieForm.get('name').value==movi.name)
@@ -88,92 +85,61 @@ this.route.params.subscribe(
   onCancel(){
 this.router.navigate(['../'],{relativeTo:this.route});
   }
-
-  // saveData(){
-  //   this.dsService.storeMovies();
-  // }
-
-  
-
+ 
   private initForm(){
-let movieName='';
-let movieImagePath;
-// let movieImagePath=this.imagePath;
-let movieDescription='';
-// let movieActors='';
-let movieID=0;
-let movieActors=new FormArray([]);
+    let movieName='';
+    let movieImagePath;
+    let movieDescription='';
+    let movieID=0;
+    let movieActors=new FormArray([]);
 
-if(this.editMode){
+if(this.editMode)
+{
   const movie=this.movieService.getMovie(this.id);
   movieName=movie.name;
-  this.viewImageFile=this._sanitizer.bypassSecurityTrustResourceUrl('data:image;base64,'+movie.imagePath);
-  // movieImagePath=movie.imagePath;
-  this.viewImageFile=this._sanitizer.bypassSecurityTrustResourceUrl('data:image;base64,'+movie.imagePath);
+  this.viewImageFile=this._sanitizer.bypassSecurityTrustResourceUrl('data:image;base64,'+movie.imagePath); 
   movieImagePath=this.imagePath;
-  // movieImagePath=this.imagePath;
-  // movieImagePath=this.viewImageFile;
-  movieDescription=movie.description;
-  // movieActors=movie.actors;
-  movieID=movie.movieID;
-  
+  movieDescription=movie.description; 
+  movieID=movie.movieID; 
  if(movie['actors']){
     for(let actor of movie.actors){
       movieActors.push(
         new FormGroup({
           'name':new FormControl(actor.name,Validators.required),
           'role':new FormControl(actor.role,Validators.required)
-        })
-      );
+        }));
     }
   }
 }
     this.movieForm=new FormGroup({
-      'name':new FormControl(movieName,Validators.required),
-      // 'imagePath':new FormControl(movieImagePath,Validators.required),
+      'name':new FormControl(movieName,Validators.required),      
       'imagePath':new FormControl(movieImagePath),
-      'description':new FormControl(movieDescription,Validators.required),
-      // 'actors':new FormControl(movieActors,Validators.required),
+      'description':new FormControl(movieDescription,Validators.required),     
       'movieID':new FormControl(movieID),
       'actors':movieActors
-    });
-    
-
+    });    
   }
   
   get controls() { // a getter!
     return (<FormArray>this.movieForm.get('actors')).controls;
   } 
 
-  selectFile(event){
-    
-    const file = (event.target as HTMLInputElement).files[0];
-    // this.movieForm.patchValue({
-    //   imagex:file
-    // });
-    this.movieForm.get('imagePath').updateValueAndValidity();
-
-    // File Preview
+  selectFile(event){    
+    const file = (event.target as HTMLInputElement).files[0];    
+    this.movieForm.get('imagePath').updateValueAndValidity();  
     const reader = new FileReader();
-    
-    
-    
     reader.readAsDataURL(file);
     reader.onload = () => {
       this.viewImage=reader.result as string;
-this.viewImageFile=reader.result;
-      // this.imagePath=reader.result.toString().split(',')[1];
+      this.viewImageFile=reader.result;    
       this.imagePath=reader.result.toString().split(',')[1];
       // this.imagePath = reader.result as string;
-      console.log(this.imagePath);
-      
+      console.log(this.imagePath);     
       this.movieForm.controls['imagePath'].setValue(
         this.imagePath
-      );
+      );}    
     }
-    
-      }
-    }
+  }
   
 
 

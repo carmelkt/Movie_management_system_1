@@ -31,8 +31,7 @@ namespace WebAPI.Controllers
         [Authorize(Roles = "Admin,AppUser")]
         public IActionResult getMovies()
         {       
-            List<MovieFullModel> allMovies = new List<MovieFullModel>();
-            //return new string[]{"KalyanaRaman","Vettam","Shutter Island"};
+            List<MovieFullModel> allMovies = new List<MovieFullModel>();         
             var movies=GetMovies();
             var actors=GetActors();
             var moviecasts=dc.MovieCasts.ToList();
@@ -71,48 +70,12 @@ namespace WebAPI.Controllers
             return(dc.Actors.ToList());
         }
 
-         private void checkactor(string actorname){
-             {var value=dc.Actors.Where(x=>x.name==actorname).FirstOrDefault();
-             if(value==null)
-             {dc.Actors.Add(new Actor(){name=actorname});
-             dc.SaveChanges();}}
-         }
-         private void checkmovie(string moviename,string imagepath,string description,int mid){
-             {Movie value=dc.Movies.Where(x=>x.name==moviename).FirstOrDefault();
-             if(value==null)
-             {dc.Movies.Add(new Movie(){name=moviename,imagePath=imagepath,description=description});
-             dc.SaveChanges();}
-             else{
-                 value.description=description;
-                 value.imagePath=imagepath;             
-                 dc.SaveChanges();
-             }}
-         }
-
-         private void checkmoviecast(string moviename,string actorname, string role){
-             Movie value=dc.Movies.Where(x=>x.name==moviename).FirstOrDefault();
-             Actor value2=dc.Actors.Where(x=>x.name==actorname).FirstOrDefault();
-             MovieCast value3=dc.MovieCasts.Where(x=>x.ActorID==value2.ActorID&&x.MovieID==value.MovieID).FirstOrDefault();
-             if(value!=null&&value2!=null&&value3==null)
-             {
-                 int mid=value.MovieID;
-                 int aid=value2.ActorID;
-                 dc.MovieCasts.Add(new MovieCast(){MovieID=mid,ActorID=aid,role=role});
-                 dc.SaveChanges();
-             }
-             else if(value!=null&&value2!=null&&value3!=null)
-             {
-                 value3.role=role;
-                 dc.SaveChanges();
-             }
-         }
-
+         
         [HttpPut("post2")]
         [Authorize(Roles ="Admin")]
         public  IActionResult AddMovie2(MovieFullModel movie)
         {
-            Movie us=new Movie();
-            // Actor actor=new Actor();
+            Movie us=new Movie();            
             MovieCast mc=new MovieCast();
             
             foreach(var actor in movie.actors){
@@ -133,6 +96,49 @@ namespace WebAPI.Controllers
             }         
             return Ok(movie);
         }
+
+        private void checkactor(string actorname)
+             {
+                var value=dc.Actors.Where(x=>x.name==actorname).FirstOrDefault();
+                if(value==null)
+                {
+                  dc.Actors.Add(new Actor(){name=actorname});
+                  dc.SaveChanges();
+                }
+             }
+         
+         private void checkmovie(string moviename,string imagepath,string description,int mid)
+             {
+                 Movie value=dc.Movies.Where(x=>x.name==moviename).FirstOrDefault();
+                 if(value==null)
+                 {
+                     dc.Movies.Add(new Movie(){name=moviename,imagePath=imagepath,description=description});
+                     dc.SaveChanges();}
+                 else{
+                     value.description=description;
+                     value.imagePath=imagepath;             
+                     dc.SaveChanges();
+                     }
+             }
+         
+         private void checkmoviecast(string moviename,string actorname, string role)
+         {
+             Movie value=dc.Movies.Where(x=>x.name==moviename).FirstOrDefault();
+             Actor value2=dc.Actors.Where(x=>x.name==actorname).FirstOrDefault();
+             MovieCast value3=dc.MovieCasts.Where(x=>x.ActorID==value2.ActorID&&x.MovieID==value.MovieID).FirstOrDefault();
+             if(value!=null&&value2!=null&&value3==null)
+             {
+                 int mid=value.MovieID;
+                 int aid=value2.ActorID;
+                 dc.MovieCasts.Add(new MovieCast(){MovieID=mid,ActorID=aid,role=role});
+                 dc.SaveChanges();
+             }
+             else if(value!=null&&value2!=null&&value3!=null)
+             {
+                 value3.role=role;
+                 dc.SaveChanges();
+             }
+         }
 
 
         [HttpPut("delete")]

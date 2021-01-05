@@ -24,24 +24,22 @@ export class MovieDetailComponent implements OnInit {
      private service:AuthService,
      private _sanitizer:DomSanitizer) { }
 
-  ngOnInit() {
-    
+  ngOnInit() {        
     this.route.params.subscribe(
       (params:Params)=>{
-this.id=+params['id'];
-this.movie=this.movieService.getMovie(this.id);
-this.viewImage=this._sanitizer.bypassSecurityTrustResourceUrl('data:image;base64,'+this.movie.imagePath);
-if(localStorage.getItem('token')!=null){
-  if(this.service.roleMatch(['Admin'])){
-    this.isAdmin=true;
-  }
-}
-      }
-    )
+        this.id=+params['id'];
+        this.movie=this.movieService.getMovie(this.id);
+        this.viewImage=this._sanitizer.bypassSecurityTrustResourceUrl('data:image;base64,'+this.movie.imagePath);
+        if(localStorage.getItem('token')!=null){  
+          if(this.service.roleMatch(['Admin'])){   
+            this.isAdmin=true; 
+          }
+        }
+      })
   }
 
   onEditMovie(){
-this.router.navigate(['edit'],{relativeTo:this.route});
+    this.router.navigate(['edit'],{relativeTo:this.route});
   }
 
   onDeleteMovie(){
@@ -53,5 +51,4 @@ this.router.navigate(['edit'],{relativeTo:this.route});
 
     else this.router.navigate(['../forbidden']);
   }
-
 }

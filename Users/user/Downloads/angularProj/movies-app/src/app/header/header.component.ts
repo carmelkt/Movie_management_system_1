@@ -12,9 +12,7 @@ export class HeaderComponent implements OnInit{
 userDetails;
 isLoggedIn=false;
 
-constructor(private dsService:DataStorageService, private router:Router, private service:AuthService){
-
-}
+constructor(private dsService:DataStorageService, private router:Router, private service:AuthService){}
 
 ngOnInit() {
     if(localStorage.getItem('token')!=null){
@@ -41,6 +39,5 @@ onLogout() {
   this.isLoggedIn=false;
     localStorage.removeItem('token');
     this.router.navigate(['/auth/login']);
-  }
-   
+  }   
 }

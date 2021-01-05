@@ -8,12 +8,9 @@ import { Component, OnInit } from '@angular/core';
  
 })
 export class MoviesComponent implements OnInit {
- 
 
   constructor() { }
 
-  ngOnInit() {
-    
+  ngOnInit() {   
   }
-
 }

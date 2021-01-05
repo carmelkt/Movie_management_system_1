@@ -34,19 +34,15 @@ export class MovieListComponent implements OnInit,  OnDestroy {
       if(this.service.roleMatch(['Admin'])){
         this.isAdmin=true;
       }}
-    this.movies=this.movieService.getMovies();
-    
+    this.movies=this.movieService.getMovies();    
   }
 
   onNewMovie(){
-this.router.navigate(['new'],{relativeTo:this.route});
+    this.router.navigate(['new'],{relativeTo:this.route});
   }
 
   ngOnDestroy(){
-this.subscription.unsubscribe(); 
-this.isAdmin=false;
+    this.subscription.unsubscribe(); 
+    this.isAdmin=false;
   }
-
-  
-
 }

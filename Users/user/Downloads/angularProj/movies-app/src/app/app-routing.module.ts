@@ -15,27 +15,41 @@ import { MoviesComponent } from './movies/movies.component';
 
 const appRoutes:Routes=[
     {path:'', redirectTo:'/auth/login',pathMatch:'full'},
-{path:'movies', component:MoviesComponent,resolve:[MoviesResolverService], children:[
-    {path:'',component:MovieStartComponent},
-    {path:'new',component:MovieEditComponent,canActivate:[AuthGuardGuard],data:{permittedRoles:['Admin']}},
-    {path:':id', component:MovieDetailComponent, resolve:[MoviesResolverService]},
-    {path:':id/edit', component:MovieEditComponent, resolve:[MoviesResolverService],canActivate:[AuthGuardGuard],data :{permittedRoles:['Admin']}}  
-],canActivate:[AuthGuardGuard]},
-//{path:'header',component:HeaderComponent,canActivate:[AuthGuardGuard]},
-  {path:'forbidden',component:ForbiddenComponent},
-  //{path:'adminpanel',component:AdminPanelComponent,canActivate:[AuthGuardGuard],data :{permittedRoles:['Admin']}},
-{path:'auth',component:AuthComponent, children:[
-    {path:'',component:LoginComponent},
-    {path:'registration',component:RegistrationComponent},
-    {path:'login',component:LoginComponent}
-]}
+
+    {path:'movies', component:MoviesComponent,resolve:[MoviesResolverService], children:[
+    
+        {path:'',component:MovieStartComponent},
+    
+        {path:'new',component:MovieEditComponent,canActivate:[AuthGuardGuard],data:{permittedRoles:['Admin']}},
+    
+        {path:':id', component:MovieDetailComponent, resolve:[MoviesResolverService]},
+    
+        {path:':id/edit', component:MovieEditComponent, resolve:[MoviesResolverService],canActivate:[AuthGuardGuard],data :{permittedRoles:['Admin']}}  
+
+    ],canActivate:[AuthGuardGuard]},
+
+  
+    {path:'forbidden',component:ForbiddenComponent},
+  
+
+    {path:'auth',component:AuthComponent, children:[
+    
+        {path:'',component:LoginComponent},
+    
+        {path:'registration',component:RegistrationComponent},
+    
+        {path:'login',component:LoginComponent}
+
+    ]}
+
 ];
 
+
 @NgModule({
-imports:[RouterModule.forRoot(appRoutes)],
-exports:[RouterModule]
+
+    imports:[RouterModule.forRoot(appRoutes)],
+
+    exports:[RouterModule]
 })
 
-export class appRoutingModule{
-
-}
+export class appRoutingModule{}

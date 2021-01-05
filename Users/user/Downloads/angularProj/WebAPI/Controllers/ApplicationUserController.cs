@@ -62,7 +62,6 @@ namespace WebAPI.Controllers
                 var role=await _userManager.GetRolesAsync(user);
                 IdentityOptions _options=new IdentityOptions();
 
-
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new Claim[]
@@ -70,7 +69,7 @@ namespace WebAPI.Controllers
                         new Claim("UserID",user.Id.ToString()),
                         new Claim(_options.ClaimsIdentity.RoleClaimType,role.FirstOrDefault())
                     }),
-                    Expires = DateTime.UtcNow.AddMinutes(5),
+                    Expires = DateTime.UtcNow.AddMinutes(2),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JWT_Secret)), SecurityAlgorithms.HmacSha256Signature)
                 };
                 var tokenHandler = new JwtSecurityTokenHandler();
@@ -80,8 +79,6 @@ namespace WebAPI.Controllers
             }
             else
                 return BadRequest(new { message = "Username or password is incorrect." });
-        }
-
-        
+        }       
     }
 }

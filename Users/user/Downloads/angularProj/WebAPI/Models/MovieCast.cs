@@ -19,7 +19,6 @@ namespace WebAPI.Models
         [ForeignKey("MovieID")]
         public Movie Movie { get; set; }
         public string role { get; set; }
-       
-        
+               
     }
 }

@@ -17,17 +17,14 @@ namespace WebAPI.Data
         public movieDbContext(DbContextOptions<movieDbContext> options):base(options){}  
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            
+        {           
             modelBuilder.Entity<MovieCast>().HasKey(x => new { x.ActorID, x.MovieID });
-
             base.OnModelCreating(modelBuilder);
         }
  
 
 
         public  DbSet<Movie> Movies {get; set;}
-
         public DbSet<MovieCast> MovieCasts{get; set;}
         public  DbSet<Actor> Actors {get; set;}
 

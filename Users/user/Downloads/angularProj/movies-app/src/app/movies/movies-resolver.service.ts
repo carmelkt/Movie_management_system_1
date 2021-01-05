@@ -7,19 +7,16 @@ import { MovieService } from './movie.service';
 @Injectable({providedIn:'root'})
 export class MoviesResolverService implements Resolve<Movie[]>{
     constructor(private dsService:DataStorageService,
-        private movieService:MovieService){
-
-    }
+        private movieService:MovieService){}
 
     resolve(route:ActivatedRouteSnapshot,state:RouterStateSnapshot){
-const movies=this.movieService.getMovies();
-
-if(movies.length==0){
-    return this.dsService.fetchMovies();
-} else{
-    return movies;
-}
-       
+        const movies=this.movieService.getMovies();
+        if(movies.length==0){   
+            return this.dsService.fetchMovies();
+        } 
+        else
+        {   
+            return movies;
+        }      
     }
-
 }

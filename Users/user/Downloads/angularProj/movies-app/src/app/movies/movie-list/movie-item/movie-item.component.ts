@@ -10,8 +10,8 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class MovieItemComponent implements OnInit {
   viewImage;
-constructor(private _sanitizer:DomSanitizer){
-}
+
+  constructor(private _sanitizer:DomSanitizer){}
 
   @Input() movie:Movie;
   
@@ -21,5 +21,4 @@ constructor(private _sanitizer:DomSanitizer){
   ngOnInit() {
      this.viewImage=this._sanitizer.bypassSecurityTrustResourceUrl('data:image;base64,'+this.movie.imagePath);
   }
-
 }

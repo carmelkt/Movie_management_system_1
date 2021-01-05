@@ -16,8 +16,7 @@ namespace WebAPI.Models
         public string description{get; set;}
 
         public string imagePath{get; set;}
-
-        // [ForeignKey("actorID")]
+        
          public List<MovieCast> MovieCasts{get; set;}
 
 

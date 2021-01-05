@@ -30,32 +30,16 @@
                         class="form-control" >
                     </div>
                 </div>
-            </div>
-            <!-- <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-group">
-                        <label for="imagePath">Poster URL</label>
-                        <input type="text"
-                        id="imagePath"
-                        formControlName="imagePath"
-                        class="form-control"
-                        #imagePath>
-                    </div>
-                </div>
-            </div> -->
+            </div>            
             <div class="row" >
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label for="imagePath">Poster URL</label>
-                        <input type="file"
-                        
+                        <input type="file"                       
                         accept="image/*"
                         id="imagePath"
                         name="imagePath"
-                        (change)="selectFile($event)"
-                        
-                        
-                        
+                        (change)="selectFile($event)"                                                                   
                         >
                         <input type="hidden" name="fileHidden"  formControlName="imagePath"/>
                     </div>
@@ -82,28 +66,7 @@
                         rows="3"></textarea>
                     </div>
                 </div>
-            </div>
-            <!-- <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-group">
-                        <label for="actors">Actors</label>
-                        <input type="text"
-                        id="actors"
-                        formControlName="actors"
-                        class="form-control"
-                        >
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="row">
-                        <div class="col-xs-12">
-                            <button  type="button" class="btn btn-success" (click)="onAddActor()">Add Actor/Director</button>
-                        </div>
-                        <hr>
-                        <hr>
-                    </div>       -->
-            
-                
+            </div>                                  
             <div class="row">
                 <div class="col-xs-12" formArrayName="actors">
                     <div class="row" 
