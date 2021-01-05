@@ -9,8 +9,8 @@ using WebAPI.Data;
 namespace WebAPI.Migrations
 {
     [DbContext(typeof(movieDbContext))]
-    [Migration("20201230165940_modifiedTable")]
-    partial class modifiedTable
+    [Migration("20210105055420_imageUrl")]
+    partial class imageUrl
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,9 @@ namespace WebAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("imagePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("imageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("name")

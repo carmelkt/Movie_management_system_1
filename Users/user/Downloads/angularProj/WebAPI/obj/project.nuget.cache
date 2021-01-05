@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "KUS4qpcegyktMVr8rBa28rF/3YMOKWwKzqMLft1hoVctqj4/XwCuJ6bm7Pdu28l6nfSeCo2j0oaiKJ0AERstOQ==",
+  "dgSpecHash": "tmaCCXzRTDuB6AdisI4FtAw57aZpthWhFxkGWTNmtkdXVXQEzYXA5xj+6FhEMQNxstIIRnqqksoIZ+egZ68QWA==",
   "success": true,
   "projectFilePath": "C:\\Users\\user\\Downloads\\angularProj\\WebAPI\\WebAPI.csproj",
   "expectedPackageFiles": [
@@ -88,6 +88,7 @@
     "C:\\Users\\user\\.nuget\\packages\\system.io\\4.3.0\\system.io.4.3.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\system.io.filesystem\\4.3.0\\system.io.filesystem.4.3.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\system.io.filesystem.primitives\\4.3.0\\system.io.filesystem.primitives.4.3.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\system.io.unmanagedmemorystream\\4.3.0\\system.io.unmanagedmemorystream.4.3.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\system.linq\\4.3.0\\system.linq.4.3.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\system.net.nameresolution\\4.3.0\\system.net.nameresolution.4.3.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\system.net.primitives\\4.3.0\\system.net.primitives.4.3.0.nupkg.sha512",

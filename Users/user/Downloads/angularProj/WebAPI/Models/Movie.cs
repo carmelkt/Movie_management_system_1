@@ -16,9 +16,9 @@ namespace WebAPI.Models
         public string description{get; set;}
 
         public string imagePath{get; set;}
-        
+
+        public string imageUrl{get;set;}
+
          public List<MovieCast> MovieCasts{get; set;}
-
-
     }
 }

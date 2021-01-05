@@ -15,6 +15,8 @@ namespace WebAPI.Models
 
         public string imagePath{get; set;}
 
+        public string imageUrl{get;set;}
+
         public string description{get; set;}
 
         public ActorFullModel[] actors{get; set;}       

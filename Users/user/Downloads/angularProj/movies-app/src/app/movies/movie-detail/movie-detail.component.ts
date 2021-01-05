@@ -16,6 +16,7 @@ export class MovieDetailComponent implements OnInit {
   id:number;
   isAdmin=false;
   viewImage;
+  viewImage2;
 
   constructor(private movieService:MovieService,
     private dsService:DataStorageService,
@@ -30,6 +31,7 @@ export class MovieDetailComponent implements OnInit {
         this.id=+params['id'];
         this.movie=this.movieService.getMovie(this.id);
         this.viewImage=this._sanitizer.bypassSecurityTrustResourceUrl('data:image;base64,'+this.movie.imagePath);
+        this.viewImage2=this._sanitizer.bypassSecurityTrustResourceUrl('data:image;base64,'+this.movie.imageUrl);
         if(localStorage.getItem('token')!=null){  
           if(this.service.roleMatch(['Admin'])){   
             this.isAdmin=true; 

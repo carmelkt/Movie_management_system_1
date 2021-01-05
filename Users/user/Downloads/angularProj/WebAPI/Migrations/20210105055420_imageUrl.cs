@@ -2,10 +2,23 @@
 
 namespace WebAPI.Migrations
 {
-    public partial class newDbDesign5 : Migration
+    public partial class imageUrl : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Actors",
+                columns: table => new
+                {
+                    ActorID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Actors", x => x.ActorID);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Movies",
                 columns: table => new
@@ -14,7 +27,8 @@ namespace WebAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     name = table.Column<string>(nullable: true),
                     description = table.Column<string>(nullable: true),
-                    imagePath = table.Column<string>(nullable: true)
+                    imagePath = table.Column<string>(nullable: true),
+                    imageUrl = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -22,32 +36,12 @@ namespace WebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Actors",
-                columns: table => new
-                {
-                    ActorID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(nullable: true),
-                    role = table.Column<string>(nullable: true),
-                    MovieID = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Actors", x => x.ActorID);
-                    table.ForeignKey(
-                        name: "FK_Actors_Movies_MovieID",
-                        column: x => x.MovieID,
-                        principalTable: "Movies",
-                        principalColumn: "MovieID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "MovieCasts",
                 columns: table => new
                 {
                     ActorID = table.Column<int>(nullable: false),
-                    MovieID = table.Column<int>(nullable: false)
+                    MovieID = table.Column<int>(nullable: false),
+                    role = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,11 +59,6 @@ namespace WebAPI.Migrations
                         principalColumn: "MovieID",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Actors_MovieID",
-                table: "Actors",
-                column: "MovieID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MovieCasts_MovieID",

@@ -19,8 +19,11 @@ export class MovieEditComponent implements OnInit {
   editMode=false;
   movieForm:FormGroup;
   imagePath:string;
+  imageUrl:string;
   viewImage:string;
+  viewImage2:string;
   viewImageFile;
+  viewImageFile2;
   movies:Movie[];
   movieExist=false;
 
@@ -49,8 +52,10 @@ this.route.params.subscribe(
     
     if(this.movieForm.get('imagePath').value==null)
     {this.movieForm.patchValue({"imagePath":movie.imagePath});}
+    if(this.movieForm.get('imageUrl').value==null)
+    {this.movieForm.patchValue({"imageUrl":movie.imageUrl});}
      this.movieService.updateMovie(this.id,this.movieForm.value);
-    } 
+    }    
     else{
     this.movies=this.movieService.getMovies();
     this.movies.forEach(movi=> {
@@ -65,6 +70,7 @@ this.route.params.subscribe(
      this.movieService.addMovie(this.movieForm.value);
     }
    }
+   console.log(this.movieForm.value);
    this.onCancel();
    this.dsService.storeMovies();
   }
@@ -89,6 +95,7 @@ this.router.navigate(['../'],{relativeTo:this.route});
   private initForm(){
     let movieName='';
     let movieImagePath;
+    let movieImageUrl;
     let movieDescription='';
     let movieID=0;
     let movieActors=new FormArray([]);
@@ -98,7 +105,9 @@ if(this.editMode)
   const movie=this.movieService.getMovie(this.id);
   movieName=movie.name;
   this.viewImageFile=this._sanitizer.bypassSecurityTrustResourceUrl('data:image;base64,'+movie.imagePath); 
+  this.viewImageFile2=this._sanitizer.bypassSecurityTrustResourceUrl('data:image;base64,'+movie.imageUrl); 
   movieImagePath=this.imagePath;
+  movieImageUrl=this.imageUrl;
   movieDescription=movie.description; 
   movieID=movie.movieID; 
  if(movie['actors']){
@@ -114,6 +123,7 @@ if(this.editMode)
     this.movieForm=new FormGroup({
       'name':new FormControl(movieName,Validators.required),      
       'imagePath':new FormControl(movieImagePath),
+      'imageUrl':new FormControl(movieImageUrl),
       'description':new FormControl(movieDescription,Validators.required),     
       'movieID':new FormControl(movieID),
       'actors':movieActors
@@ -139,6 +149,22 @@ if(this.editMode)
         this.imagePath
       );}    
     }
+
+    selectFile2(event){    
+      const file = (event.target as HTMLInputElement).files[0];    
+      this.movieForm.get('imageUrl').updateValueAndValidity();  
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.viewImage2=reader.result as string;
+        this.viewImageFile2=reader.result;    
+        this.imageUrl=reader.result.toString().split(',')[1];
+        // this.imagePath = reader.result as string;
+        console.log(this.imagePath);     
+        this.movieForm.controls['imageUrl'].setValue(
+          this.imageUrl
+        );}    
+      }
   }
   
 

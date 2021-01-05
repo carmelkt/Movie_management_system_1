@@ -46,6 +46,9 @@ namespace WebAPI.Migrations
                     b.Property<string>("imagePath")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("imageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(max)");
 

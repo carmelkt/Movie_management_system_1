@@ -1,6 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
+using System.ComponentModel.Design;
+using System.ComponentModel;
+using System.Web;
+using System.Net;
+using System.IO.MemoryMappedFiles;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models;
@@ -8,6 +14,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using WebAPI.Data;
 using WebAPI.Data.Repo;
+using System.Drawing;
+using System.Text;
+using System.Drawing.Design;
+using System.Drawing.Drawing2D;
+using System.Drawing.Printing;
+using System.Drawing.Text;
+using System.IO.IsolatedStorage;
+using System.Drawing.Imaging;
+using System.Windows.Input;
+using System.Drawing.Configuration;
 using AutoMapper;
 
 
@@ -28,7 +44,7 @@ namespace WebAPI.Controllers
         }
     
         [HttpGet]
-        [Authorize(Roles = "Admin,AppUser")]
+        // [Authorize(Roles = "Admin,AppUser")]
         public IActionResult getMovies()
         {       
             List<MovieFullModel> allMovies = new List<MovieFullModel>();         
@@ -41,6 +57,23 @@ namespace WebAPI.Controllers
                 movieFull.MovieID=movie.MovieID;
                 movieFull.name=movie.name;
                 movieFull.imagePath=movie.imagePath;
+                //get byte64 from image path
+                     string folderPath=movie.imageUrl;
+                     string fileName=movie.name;
+                     var files=Directory.GetFiles(@"C:\Users\user\Downloads\angularProj\WebAPI\Data\MoviePoster");
+                     var dataContent=string.Empty;
+                     
+                     foreach(var file in files)
+                     {
+                         if(Path.GetFileNameWithoutExtension(file)==fileName){
+                             byte[] datas=System.IO.File.ReadAllBytes(file);
+                             dataContent=Convert.ToBase64String(datas);
+                             movie.imageUrl=dataContent;
+                              break;
+                         }                         
+                     }
+                     
+                movieFull.imageUrl=movie.imageUrl;
                 movieFull.description=movie.description;
                 int mid=movie.MovieID;
                 var mc=moviecasts.Where(x=>x.MovieID==mid).ToArray();
@@ -72,16 +105,28 @@ namespace WebAPI.Controllers
 
          
         [HttpPut("post2")]
-        [Authorize(Roles ="Admin")]
+        // [Authorize(Roles ="Admin")]
         public  IActionResult AddMovie2(MovieFullModel movie)
         {
             Movie us=new Movie();            
             MovieCast mc=new MovieCast();
-            
+            //convert and store image
+            if(movie.imageUrl!=null){
+            byte[] imgBytes=Convert.FromBase64String(movie.imageUrl);
+            using(var ms=new MemoryStream(imgBytes,0,imgBytes.Length))
+            {
+                Image image=Image.FromStream(ms,true);
+                string folderPath="Data\\MoviePoster\\"+movie.name+".jpg";
+                System.IO.File.WriteAllBytes(folderPath,imgBytes);
+                movie.imageUrl=folderPath;
+            }
+            }
+
+
             foreach(var actor in movie.actors){
                 checkactor(actor.name);
             }
-            checkmovie(movie.name,movie.imagePath,movie.description,movie.MovieID);
+            checkmovie(movie.name,movie.imagePath,movie.description,movie.MovieID,movie.imageUrl);
 
             Movie value=dc.Movies.Where(x=>x.name==movie.name).FirstOrDefault();
             List<MovieCast> del=dc.MovieCasts.Where(x=>x.MovieID==value.MovieID).ToList();
@@ -96,6 +141,7 @@ namespace WebAPI.Controllers
             }         
             return Ok(movie);
         }
+        
 
         private void checkactor(string actorname)
              {
@@ -107,12 +153,12 @@ namespace WebAPI.Controllers
                 }
              }
          
-         private void checkmovie(string moviename,string imagepath,string description,int mid)
+         private void checkmovie(string moviename,string imagepath,string description,int mid,string imageUrl)
              {
                  Movie value=dc.Movies.Where(x=>x.name==moviename).FirstOrDefault();
                  if(value==null)
                  {
-                     dc.Movies.Add(new Movie(){name=moviename,imagePath=imagepath,description=description});
+                     dc.Movies.Add(new Movie(){name=moviename,imagePath=imagepath,description=description,imageUrl=imageUrl});
                      dc.SaveChanges();}
                  else{
                      value.description=description;

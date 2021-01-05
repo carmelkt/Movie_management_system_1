@@ -55,6 +55,31 @@
                     <img [src]="viewImageFile" style="height: 300px;" class="img-responsive">
                 </div>
             </div>
+            <div class="row" >
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="imageUrl">Poster Image2</label>
+                        <input type="file"                       
+                        accept="image/*"
+                        id="imageUrl"
+                        name="imageUrl"
+                        (change)="selectFile2($event)"                                                                   
+                        >
+                        <input type="hidden" name="fileHidden"  formControlName="imageUrl"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="!editMode">
+                <div class="col-xs-12">
+                    <img [src]="viewImage2" style="height: 300px;" class="img-responsive">
+                </div>
+            </div>
+            
+            <div class="row" *ngIf="editMode">
+                <div class="col-xs-12">
+                    <img [src]="viewImageFile2" style="height: 300px;" class="img-responsive">
+                </div>
+            </div>
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
